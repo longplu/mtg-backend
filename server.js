@@ -45,7 +45,7 @@ const cardSchema = new mongoose.Schema({
 
 const deckSchema = new mongoose.Schema({
     user: String, //{type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    uId: String,
+    //uId: String,
     name: String,
     cards: [cardSchema]
   }, { timestamps: true });
@@ -68,6 +68,53 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("hello world")
 })
+
+// INDEX ROUTE
+app.get("/decks", async (req, res) => {
+  try {
+    res.json(await Deck.find({}));
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+// CREATE ROUTE
+app.post("/decks", async (req, res) => {
+  try {
+    res.json(await Deck.create(req.body));
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+// DELETE ROUTE
+app.delete("/decks/:id", async (req, res) => {
+  try {
+    res.json(await Deck.findByIdAndDelete(req.params.id));
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+// DELETE ROUTE
+app.delete("/decks/card/:id", async (req, res) => {
+  try {
+    res.json(await Deck.findByIdAndDelete(req.params.id));
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+// UPDATE ROUTE
+app.put("/decks/:id", async (req, res) => {
+  try {
+    res.json(
+      await Deck.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    );
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // LISTENER
