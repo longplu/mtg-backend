@@ -32,15 +32,15 @@ mongoose.connection
 const cardSchema = new mongoose.Schema({
     scryfall_id: { type: String, required: true },
     qty: { type: Number, required: true },
-    name: String,
-    prices_usd: Number,
-    img_uris_small: { type: String, required: true },
-    img_uris_normal: { type: String, required: true },
-    purchase_uris_tcgplayer: String,
-    type_line: String,
-    mana_cost: String,
-    oracle_text: String,
-    cmc: Number,
+    // name: String,
+    // prices_usd: Number,
+    // img_uris_small: { type: String, required: true },
+    // img_uris_normal: { type: String, required: true },
+    // purchase_uris_tcgplayer: String,
+    // type_line: String,
+    // mana_cost: String,
+    // oracle_text: String,
+    // cmc: Number,
   }, { timestamps: true});
 
 const deckSchema = new mongoose.Schema({
@@ -87,7 +87,8 @@ app.post("/decks", async (req, res) => {
   }
 });
 
-// DELETE ROUTE
+
+// DELETE DECK ROUTE
 app.delete("/decks/:id", async (req, res) => {
   try {
     res.json(await Deck.findByIdAndDelete(req.params.id));
@@ -96,10 +97,11 @@ app.delete("/decks/:id", async (req, res) => {
   }
 });
 
-// DELETE ROUTE
-app.delete("/decks/card/:id", async (req, res) => {
+// DELETE CARD ROUTE
+app.delete("/decks/:id/card/:linkId", async (req, res) => {
+  console.log(req.params)
   try {
-    res.json(await Deck.findByIdAndDelete(req.params.id));
+    res.json(await Deck.findByIdAndUpdate(req.params.id, {$pull: {"cards": { _id: req.params.linkId }}}))
   } catch (error) {
     res.status(400).json(error);
   }
@@ -110,13 +112,13 @@ app.put("/decks/:id", async (req, res) => {
   try {
     res.json(
       await Deck.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    );
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// LISTENER
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      );
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  });
+  
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // LISTENER
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.listen(PORT, () => console.log(`listening on PORT ${PORT}`))
