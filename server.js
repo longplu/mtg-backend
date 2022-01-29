@@ -109,10 +109,12 @@ app.delete("/decks/:id/card/:linkId", async (req, res) => {
 
 // UPDATE ROUTE
 app.put("/decks/:id", async (req, res) => {
+  console.log(req.body)
   try {
-    res.json(
-      await Deck.findByIdAndUpdate(req.params.id, req.body, { new: true })
-      );
+    const deck = await Deck.findById(req.params.id)
+    deck.cards.push(req.body)
+    await deck.save()
+    res.json(deck);
     } catch (error) {
       res.status(400).json(error);
     }
