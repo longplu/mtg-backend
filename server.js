@@ -44,7 +44,7 @@ const cardSchema = new mongoose.Schema({
   }, { timestamps: true});
 
 const deckSchema = new mongoose.Schema({
-    user: String, //{type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    // user: String, //{type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     //uId: String,
     name: String,
     cards: [cardSchema]
@@ -78,6 +78,15 @@ app.get("/decks", async (req, res) => {
   }
 });
 
+// app.get("/decks/:id", async (req, res) => {
+//   console.log((Deck.findById(req.params.id)))
+//   try {
+//     res.json(await Deck.findById(req.params.id));
+//   } catch (error) {
+//     res.status(400).json(error);
+//   }
+// });
+
 // CREATE ROUTE
 app.post("/decks", async (req, res) => {
   try {
@@ -88,24 +97,24 @@ app.post("/decks", async (req, res) => {
 });
 
 
-// DELETE DECK ROUTE
-app.delete("/decks/:id", async (req, res) => {
-  try {
-    res.json(await Deck.findByIdAndDelete(req.params.id));
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
+// // DELETE DECK ROUTE
+// app.delete("/decks/:id", async (req, res) => {
+//   try {
+//     res.json(await Deck.findByIdAndDelete(req.params.id));
+//   } catch (error) {
+//     res.status(400).json(error);
+//   }
+// });
 
-// DELETE CARD ROUTE
-app.delete("/decks/:id/card/:linkId", async (req, res) => {
-  console.log(req.params)
-  try {
-    res.json(await Deck.findByIdAndUpdate(req.params.id, {$pull: {"cards": { _id: req.params.linkId }}}))
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
+// // DELETE CARD ROUTE
+// app.delete("/decks/:id/card/:linkId", async (req, res) => {
+//   console.log(req.params)
+//   try {
+//     res.json(await Deck.findByIdAndUpdate(req.params.id, {$pull: {"cards": { _id: req.params.linkId }}}))
+//   } catch (error) {
+//     res.status(400).json(error);
+//   }
+// });
 
 // UPDATE ROUTE
 app.put("/decks/:id", async (req, res) => {
