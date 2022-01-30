@@ -97,14 +97,14 @@ app.post("/decks", async (req, res) => {
 });
 
 
-// // DELETE DECK ROUTE
-// app.delete("/decks/:id", async (req, res) => {
-//   try {
-//     res.json(await Deck.findByIdAndDelete(req.params.id));
-//   } catch (error) {
-//     res.status(400).json(error);
-//   }
-// });
+// DELETE DECK ROUTE
+app.delete("/decks/:id", async (req, res) => {
+  try {
+    res.json(await Deck.findByIdAndDelete(req.params.id));
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
 // // DELETE CARD ROUTE
 // app.delete("/decks/:id/card/:linkId", async (req, res) => {
