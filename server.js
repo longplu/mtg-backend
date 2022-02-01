@@ -32,9 +32,9 @@ mongoose.connection
 const cardSchema = new mongoose.Schema({
     scryfall_id: { type: String, required: true },
     qty: { type: Number, required: true },
-    // name: String,
+    name: String,
     // prices_usd: Number,
-    // img_uris_small: { type: String, required: true },
+    image: String
     // img_uris_normal: { type: String, required: true },
     // purchase_uris_tcgplayer: String,
     // type_line: String,
